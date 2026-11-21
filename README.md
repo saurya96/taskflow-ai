@@ -112,7 +112,14 @@ kubectl apply -f taskflow-ai-infra/argocd/applications/taskflow-ai.yaml
 
 ## GitHub Actions
 
-The application workflow runs frontend lint/build and backend/worker tests, builds three GHCR images, pushes on `main`, and can update the infrastructure repository when `INFRA_REPO_PAT` and `INFRA_REPO_URL` are configured.
+The application workflow runs frontend lint/build and backend/worker tests, builds AMD64 and ARM64 frontend/backend/worker images, and pushes SHA-tagged images to GHCR on `main`. The `GITHUB_TOKEN` publishes packages; no Docker Hub secret is required.
+
+Optional infrastructure auto-update configuration:
+
+- Repository secret `INFRA_REPO_PAT`: fine-grained PAT limited to `saurya96/taskflow-ai-infra` with Contents Read and write.
+- Repository variable `INFRA_REPO_URL`: `https://github.com/saurya96/taskflow-ai-infra.git` (default in the workflow).
+
+Create the PAT in GitHub Developer settings. Do not commit or paste the token.
 
 ## Submission checklist
 
